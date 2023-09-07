@@ -3,6 +3,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import MainLayout from "../../components/MainLayout";
 import { images } from "../../constants";
 import SuggestedPosts from "./container/SuggestedPosts";
+import CommentsContainer from "../../components/comments/CommentsContainer";
 
 const BreadCrumbsData = [
   {name: "Home", link: "/"},
@@ -63,6 +64,7 @@ const ArticleDetailPage = () => {
                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum a obcaecati aliquam iure debitis est voluptates perspiciatis, laborum neque, aperiam libero eveniet saepe reiciendis cum. Error maiores consectetur totam ex aliquid expedita minus, quia maxime eos repellendus libero nobis architecto optio, animi deleniti rerum quam labore magni soluta distinctio? Nobis!
                 </p>
               </div>
+              <CommentsContainer className="mt-10" />
             </article>
             <SuggestedPosts header="Latest Article" posts={postData} tags={tagsData} className="mt-8 lg:mt-0 lg:max-w-xs"/>
         </section>

@@ -23,11 +23,11 @@ UserSchema.pre("save", async function (next) {
     return next();
 });
 
-// UserSchema.methods.generateJWT = async function () {
-//     return await sign({ id: this._id }, process.env.JWT_SECRET, {
-//         expiresIn: "30d",
-//     });
-// };
+UserSchema.methods.generateJWT = async function () {
+    return await sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: "30d",  // 30 Days
+    });
+};
 
 // UserSchema.methods.comparePassword = async function (enteredPassword) {
 //     return await compare(enteredPassword, this.password);

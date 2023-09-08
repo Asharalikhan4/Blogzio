@@ -56,7 +56,7 @@ export const updateProfile = async ({ token, userData }) => {
         };
 
         const { data } = await axios.put(
-            "/api/users/updateProfile",
+            "http://localhost:5050/api/users/updateProfile",
             userData,
             config
         );

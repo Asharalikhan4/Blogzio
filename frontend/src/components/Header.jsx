@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { MdKeyboardArrowDown } from "react-icons/md";
@@ -49,6 +50,7 @@ const NavItem = ({ item }) => {
 
 const Header = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const userState = useSelector(state => state.user);
@@ -70,7 +72,7 @@ const Header = () => {
         <section className="sticky top-0 left-0 right-0 z-50 bg-white">
             <header className="container mx-auto px-5 flex justify-between py-4 items-center">
                 <div>
-                    <img className="w-16" src={images.Logo} alt="logo" />
+                    <Link to="/"><img className="w-16" src={images.Logo} alt="logo" /></Link>
                 </div>
                 <div className="lg:hidden z-50">
                     {navIsVisible ? <AiOutlineClose className="w-6 h-6" onClick={navVisibilityHandler} /> : <AiOutlineMenu className="w-6 h-6" onClick={navVisibilityHandler} />}
@@ -100,7 +102,7 @@ const Header = () => {
                             </div>
                         </div>
                     ) : (
-                        <button className="mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-3 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300">Sign in</button>
+                        <button onClick={() => navigate("/login")} className="mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-3 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300">Sign in</button>
                     )}
                 </div>
             </header>

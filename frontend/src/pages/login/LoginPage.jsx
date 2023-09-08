@@ -6,18 +6,18 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 import MainLayout from "../../components/MainLayout";
-import { signup } from "../../services/index/users";
+import { login } from "../../services/index/users";
 import { userActions } from "../../store/reducers/userReducers";
 
-const RegisterPage = () => {
+const LoginPage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userState = useSelector(state => state.user);
 
     const { mutate, isLoading } = useMutation({
-        mutationFn: ({name, email, password}) => {
-            return signup({name, email, password});
+        mutationFn: ({ email, password }) => {
+            return login({ email, password });
         },
         onSuccess: (data) => {
             dispatch(userActions.setUserInfo(data));
@@ -35,49 +35,24 @@ const RegisterPage = () => {
         }
     },[navigate, userState.userInfo]);
 
-    const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm({
+    const { register, handleSubmit, formState: { errors, isValid },} = useForm({
         defaultValues: {
-            name: "",
             email: "",
             password: "",
-            confirmPassword: ""
         },
         mode: "onChange",
     });
 
     const submitHandler = (data) => {
-        const { name, email, password } = data;
-        mutate({name, email, password});
+        const { email, password } = data;
+        mutate({ email, password });
     };
-
-    const password = watch("password");
 
     return <MainLayout>
         <section className="container mx-auto px-5 py-10">
             <div className="w-full max-w-sm mx-auto">
-                <h1 className="font-roboto text-2xl font-bold text-center text-dark-hard mb-8">Sign Up</h1>
+                <h1 className="font-roboto text-2xl font-bold text-center text-dark-hard mb-8">Login</h1>
                 <form onSubmit={handleSubmit(submitHandler)}>
-                    <div className="flex flex-col mb-6 w-full">
-                        <label htmlFor="name" className="text-[#5a7184] font-semibold block">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            {...register("name", {
-                                minLength: {
-                                    value: 1,
-                                    message: "Name length must be at least 1 character",
-                                },
-                                required: {
-                                    value: true,
-                                    message: "Name is required"
-                                },
-                            })}
-                            placeholder="Enter your name"
-                            className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${errors.name ? "border-red-500" : "border-[#c3cad9"}`} />
-                        {errors.name?.message && (
-                            <p className="text-red-500 text-xs mt-1">{errors.name?.message}</p>
-                        )}
-                    </div>
                     <div className="flex flex-col mb-6 w-full">
                         <label htmlFor="email" className="text-[#5a7184] font-semibold block">Email</label>
                         <input
@@ -124,37 +99,13 @@ const RegisterPage = () => {
                             </p>
                         )}
                     </div>
-                    <div className="flex flex-col mb-6 w-full">
-                        <label htmlFor="confirmPassword" className="text-[#5a7184] font-semibold block">Confirm Password</label>
-                        <input type="password"
-                            id="confirmPassword"
-                            {...register("confirmPassword", {
-                                required: {
-                                    value: true,
-                                    message: "Confirm password is required",
-                                },
-                                validate: (value) => {
-                                    if (value !== password) {
-                                        return "Password do not match";
-                                    }
-                                },
-                            })}
-                            placeholder="Enter password again"
-                            className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${errors.confirmPassword ? "border-red-500" : "border-[#c3cad9"
-                                }`}
-                        />
-                        {errors.confirmPassword?.message && (
-                            <p className="text-red-500 text-xs mt-1">
-                                {errors.confirmPassword?.message}
-                            </p>
-                        )}
-                    </div>
-                    <button disabled={!isValid || isLoading} type="submit" className="bg-primary text-white font-bold text-lg py-4 px-8 w-full rounded-lg mb-6 disabled:opacity-70 disabled:cursor-not-allowed">Register</button>
-                    <p className="text-sm font-semibold text-[#5a7184]">Do you have an account? <Link to="/login" className="text-primary">Sign in</Link></p>
+                    <Link to="/forget-password" className="text-sm font-semibold text-primary">Forgot Password</Link>
+                    <button disabled={!isValid || isLoading} type="submit" className="bg-primary text-white font-bold text-lg py-4 px-8 w-full rounded-lg my-6 disabled:opacity-70 disabled:cursor-not-allowed">Sign in</button>
+                    <p className="text-sm font-semibold text-[#5a7184]">Don't have an account?{" "}<Link to="/register" className="text-primary">Sign up</Link></p>
                 </form>
             </div>
         </section>
     </MainLayout>
 };
 
-export default RegisterPage;
+export default LoginPage;

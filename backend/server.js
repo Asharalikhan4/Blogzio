@@ -1,14 +1,28 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import cors from "cors";
 const app = express();
 
 import connectDB from "./config/db";
 import userRoutes from "./routes/userRoutes";
 import { errorResponseHandler, invalidPathHandler } from "./middlewares/errorHandler";
 
+const allowedOrigins = ["http://localhost:5173"];
+
+
 // Middlewares
 app.use(express.json());
+app.use(cors({
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true, // Allow cookies and headers with credentials
+}));
 
 
 // Routes

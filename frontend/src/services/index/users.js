@@ -78,7 +78,7 @@ export const updateProfilePicture = async ({ token, formData }) => {
         };
 
         const { data } = await axios.put(
-            "/api/users/updateProfilePicture",
+            "http://localhost:5050/api/users/updateProfilePicture",
             formData,
             config
         );

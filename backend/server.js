@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import cors from "cors";
+import path from "path";
 const app = express();
 
 import connectDB from "./config/db";
@@ -23,6 +24,9 @@ app.use(cors({
     },
     credentials: true, // Allow cookies and headers with credentials
 }));
+
+//  Static Assets
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 
 // Routes
